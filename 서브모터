@@ -1,0 +1,17 @@
+#include <Servo.h>
+
+Servo servo;
+
+int servoPin = 9;
+int angle = 45;
+
+void setup()
+{
+  servo.attach(servoPin);
+}
+
+void loop()
+{
+  servo.write(angle);
+  delay(15);
+}
