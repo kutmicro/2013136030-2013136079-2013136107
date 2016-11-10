@@ -7,7 +7,7 @@ int angle = 45;
 
 void setup()
 {
-  servo.attach(servoPin);
+  servo.attach(servoPin); //servoPin 제어
 }
 
 void loop()
