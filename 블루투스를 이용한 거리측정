@@ -1,11 +1,11 @@
 #include <SoftwareSerial.h>
 
-#define BLUE_TX 9 //블루투스 TX
-#define BLUE_RX 10 //블루투스 RX
+#define BLUE_TX 10 //블루투스 TX
+#define BLUE_RX 11 //블루투스 RX
 
 SoftwareSerial mySerial(BLUE_TX, BLUE_RX);  //시리얼 통신을 위한 객체선언
 char value; //블루투스에서 받는 값
-
+ bool button = false;
 void setup()
 {
   Serial.begin(9600);
@@ -16,17 +16,23 @@ void setup()
 
 void loop()
 {
-  bool button = false;
+ 
+   while(mySerial.available())  //mySerial에 전송된 값이 있으면
+  {
+  value = mySerial.read(); //전송값 읽음
+  Serial.print(value);
+  
 
-  if(value == 'off')
+  if(value == 'q')
   {
     button = false;
   }
-  if(value == 'on')
+  if(value == 'a')
   {
     button = true;
   }
-  if(button)
+  }
+  if(button == true)
   {
     long duration, cm;
 
@@ -44,6 +50,7 @@ void loop()
   delay(300);  // 0.3초 대기 후 다시 측정
   }
 }
+
 
 long microsecondsToCentimeters(long microseconds)
 {
