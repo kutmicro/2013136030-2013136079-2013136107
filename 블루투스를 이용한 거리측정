@@ -1,0 +1,54 @@
+#include <SoftwareSerial.h>
+
+#define BLUE_TX 9 //블루투스 TX
+#define BLUE_RX 10 //블루투스 RX
+
+SoftwareSerial mySerial(BLUE_TX, BLUE_RX);  //시리얼 통신을 위한 객체선언
+char value; //블루투스에서 받는 값
+
+void setup()
+{
+  Serial.begin(9600);
+  mySerial.begin(9600); //블루투스 시리얼 개방
+  pinMode(2,OUTPUT);  // 센서 Trig 핀
+  pinMode(3,INPUT);   // 센서 Echo 핀
+}
+
+void loop()
+{
+  bool button = false;
+
+  if(value == 'off')
+  {
+    button = false;
+  }
+  if(value == 'on')
+  {
+    button = true;
+  }
+  if(button)
+  {
+    long duration, cm;
+
+  digitalWrite(2,HIGH);  // 센서에 Trig 신호 입력
+  delayMicroseconds(10); // 10us 정도 유지
+  digitalWrite(2,LOW);   // Trig 신호 off
+  
+  duration = pulseIn(3,HIGH); // Echo pin: HIGH->Low 간격을 측정
+  cm = microsecondsToCentimeters(duration);
+  
+  Serial.print(cm);
+  Serial.print("cm");
+  Serial.println();
+  
+  delay(300);  // 0.3초 대기 후 다시 측정
+  }
+}
+
+long microsecondsToCentimeters(long microseconds)
+{
+  // The speed of sound is 340 m/s or 29 microseconds per centimeter.
+  // The ping travels out and back, so to find the distance of the
+  // object we take half of the distance travelled.
+  return microseconds / 29 / 2;
+}
