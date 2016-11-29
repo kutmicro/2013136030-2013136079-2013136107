@@ -5,7 +5,7 @@
 
 SoftwareSerial mySerial(BLUE_TX, BLUE_RX);  //시리얼 통신을 위한 객체선언
 char value; //블루투스에서 받는 값
- bool button = false;
+ bool button = false; //버튼값 초기화
 void setup()
 {
   Serial.begin(9600);
@@ -20,19 +20,19 @@ void loop()
    while(mySerial.available())  //mySerial에 전송된 값이 있으면
   {
   value = mySerial.read(); //전송값 읽음
-  Serial.print(value);
+  Serial.print(value);  //전송값 출력
   
 
-  if(value == 'q')
+  if(value == 'q')  //전송값이 q이면
   {
-    button = false;
+    button = false; //버튼 false
   }
-  if(value == 'a')
+  if(value == 'a')  //전송값이 a이면 
   {
-    button = true;
+    button = true;  //버튼 true
   }
-  }
-  if(button == true)
+  } 
+  if(button == true)  //버튼이 true이면 초음파센서 계속 동작 
   {
     long duration, cm;
 
@@ -43,7 +43,7 @@ void loop()
   duration = pulseIn(3,HIGH); // Echo pin: HIGH->Low 간격을 측정
   cm = microsecondsToCentimeters(duration);
   
-  Serial.print(cm);
+  Serial.print(cm); //거리 출력
   Serial.print("cm");
   Serial.println();
   
@@ -52,7 +52,7 @@ void loop()
 }
 
 
-long microsecondsToCentimeters(long microseconds)
+long microsecondsToCentimeters(long microseconds) //거리를 cm로 바꿔주는 함수
 {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
   // The ping travels out and back, so to find the distance of the
