@@ -21,8 +21,8 @@ Servo servo;  //서보 객체
 char value=0; //블루투스에서 받는 값
 int button1 = -1; //버튼값 초기화
 int button2 = -1; //버튼값 초기화
-char a [1000];
-int count = 0;
+char a [1000];  //경로저장 배열
+int count = 0;  //배열 값 초기화
 
 void forward(); //전진
 void backward();  //후진
@@ -86,29 +86,29 @@ void loop()
    if(value == '1')  //전송값이 1이면 
   {
     forward();  //전진
-    a[count] = value; 
-    count++;
+    a[count] = value; //배열에 블루투스 신호저장
+    count++;  //배열번호 증가
     Serial.print(value); 
   }
    if(value == '2')  //전송값이 2이면 
   {
    backward();  //후진
-   a[count] = value; 
-   count++;
+   a[count] = value; //배열에 블루투스 신호저장
+   count++; //배열번호 증가
    Serial.print(value); 
   }
     if(value == '3')  //전송값이 3이면 
   {
     left();  //좌회전
-    a[count] = value; 
-    count++;
+    a[count] = value; //배열에 블루투스 신호저장
+    count++;  //배열번호 증가
     Serial.print(value); 
   }
     if(value == '4')  //전송값이 4이면 
   {
    right();  //우회전
-     a[count] = value; 
-    count++;
+     a[count] = value; //배열에 블루투스 신호저장
+    count++;  //배열번호 증가
     Serial.print(value); 
   }
    if(value == '0')  //전송값이 0이면 
@@ -146,7 +146,7 @@ void loop()
 
    if(button2 == true)  //버튼이 1이면 경로돌아가기 시작
   {
-    for(int i = count-1; i >= 0; i--){
+    for(int i = count-1; i >= 0; i--){  //거꾸로 배열 출력
     Serial.print(a[i]);
     if(a[i] == '1') // 전진이면 후진
     {
